@@ -18,6 +18,29 @@ class Game
     combine_frame(knocked_pins) unless tenth_frame?
   end
 
+  def show_breakdown
+    breakdown = ''
+    @frames.each_with_index do |frame, index|
+      if frame.strike? 
+        frame_scores = "| #{frame.roll_1.to_s} X "
+        frame_scores += ' ' if frame_scores.length == 5
+        frame_scores += '|' if index == 9
+        breakdown += frame_scores
+      elsif frame.spare?
+        frame_scores = "| #{frame.roll_1.to_s} / "
+        frame_scores += ' ' if frame_scores.length < 7
+        frame_scores += '|' if index == 9
+        breakdown += frame_scores
+      else
+        frame_scores = "| #{frame.roll_1.to_s} #{frame.roll_2.to_s} "
+        frame_scores + ' ' if frame_scores.length == 5
+        frame_scores + '|' if index == 9
+        breakdown += frame_scores
+      end
+    end
+    breakdown
+  end
+
   private  
 
   def tenth_frame?
@@ -73,3 +96,36 @@ class Game
   end
 end
 
+
+game = Game.new
+ #frame 1
+ game.add_roll(4)
+ game.add_roll(6)
+ #frame 2
+ game.add_roll(5)
+ game.add_roll(5)
+ #frame 3
+ game.add_roll(5)
+ game.add_roll(4)
+ #frame 4
+ game.add_roll(10)
+ #frame 5
+ game.add_roll(9)
+ game.add_roll(0)
+ #frame 6
+ game.add_roll(10)
+ #frame 7
+ game.add_roll(6)
+ game.add_roll(4)
+ #frame 8
+ game.add_roll(5)
+ game.add_roll(2)
+ #frame 9
+ game.add_roll(10)
+ #frame 10
+ game.add_roll(10)
+ #bonus
+ game.add_roll(3)
+ game.add_roll(7)
+
+ puts game.show_breakdown

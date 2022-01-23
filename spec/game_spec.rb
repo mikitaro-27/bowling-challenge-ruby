@@ -33,6 +33,46 @@ describe Game do
     score: 10)
   }
 
+  describe '#show_breakdown' do
+    it 'shows current scores' do
+      #frame 1
+      game.add_roll(4)
+      game.add_roll(6)
+      #frame 2
+      game.add_roll(5)
+      game.add_roll(5)
+      #frame 3
+      game.add_roll(5)
+      game.add_roll(4)
+      #frame 4
+      game.add_roll(10)
+      #frame 5
+      game.add_roll(9)
+      game.add_roll(0)
+      #frame 6
+      game.add_roll(10)
+      #frame 7
+      game.add_roll(6)
+      game.add_roll(4)
+      #frame 8
+      game.add_roll(5)
+      game.add_roll(2)
+      #frame 9
+      game.add_roll(10)
+      #frame 10
+      game.add_roll(10)
+      #bonus
+      game.add_roll(3)
+      game.add_roll(7)
+
+      expect(game.total_score).to eq 152
+
+      expect(game.show_breakdown).to eq('
+        | 4 /  | 5 /  | 5 4  | 10 X | 9 0 | 10 X | 6 /  | 5 2 | 10 X | 10 X | 3 7 |\n
+        | 15   | 30   | 39   | 58   | 67  | 87   | 102  | 109 | 132  | 152  |
+      ')
+    end
+  end
 
   describe '#add_roll' do
     context 'when roll is 0-9' do
@@ -159,21 +199,6 @@ describe Game do
      end
     end
   end
-
-  # describe '#add_frame' do
-  #   it 'adds the frame' do
-  #     expect(game).to receive(:analyse_frame)
-  #     game.add_frame(strike_frame)
-  #     expect(game.frames).to eq [strike_frame]
-  #   end
-  # end
-
-  # describe '#add_frame' do
-  #   it 'receives analyse_frame(frame) ' do
-  #     expect(game).to receive(:analyse_frame).with(spare_frame)
-  #     game.add_frame(spare_frame)
-  #   end
-  # end
 
   describe '#total_score' do
     it 'returns the sum of scores' do
